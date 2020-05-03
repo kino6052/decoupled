@@ -1,12 +1,10 @@
+import { generateUniqueId } from "./utils";
+
 interface IChannel<T> {
   id: string;
   name: string;
+  type: "handler" | "callback";
   signature: T;
-}
-
-interface ILink {
-  external: string;
-  internal: string;
 }
 
 interface IBox {
@@ -15,6 +13,80 @@ interface IBox {
   channels: IChannel<unknown>[];
   links: ILink[];
 }
+
+interface IFeature {
+  id: string;
+  name: string;
+}
+
+interface ILink {
+  id: string;
+  handlerId: string;
+  callbackId: string;
+}
+
+export const features: IFeature[] = [
+  {
+    id: generateUniqueId(),
+    name: "Feature1",
+  },
+  {
+    id: generateUniqueId(),
+    name: "Feature2",
+  },
+];
+
+export const channels: IChannel<unknown>[] = [
+  {
+    id: generateUniqueId(),
+    name: "onClick",
+    type: "handler",
+    signature: "{ name: string }",
+  },
+  {
+    id: generateUniqueId(),
+    name: "doRender",
+    type: "callback",
+    signature: "{ name: string }",
+  },
+];
+
+export const links: ILink[] = [
+  {
+    id: generateUniqueId(),
+    handlerId: channels[0].id,
+    callbackId: channels[1].id,
+  },
+];
+
+export const featureToChannelRelations = [
+  [features[0].id, channels[0].id],
+  [features[1].id, channels[1].id],
+];
+
+/**
+ * feature1
+ *
+ * interface
+ *   export const onClick = (cb: (input: {}) => void) => {
+ *     // TODO: Implement
+ *   }
+ */
+
+/**
+ * feature2
+ *
+ * interface
+ *   export const doRender = (input: {}) => {
+ *     // TODO: Implement
+ *   }
+ *
+ * feature
+ *    import onClick from '../feature1/interface';
+ *
+ *    onClick(doRender);
+ *
+ */
 
 // export const features: IBox[] = [
 //   {
