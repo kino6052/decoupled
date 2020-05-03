@@ -33,6 +33,11 @@ const parseConfig = () => {
   let data = JSON.parse(rawdata);
 };
 
-createDirectory("./test");
+const getListOfFiles = (dir: string) => {
+  console.warn(fs.readdirSync(dir));
+};
+
+getListOfFiles(__dirname);
+// createDirectory("./test");
 // getCommandLineArguments();
 // parseConfig();

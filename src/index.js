@@ -5,11 +5,16 @@ var getCommandLineArguments = function () {
         console.log(index + ": " + val);
     });
 };
-var createDirectory = function (directoryName, root) {
+var createDirectory = function (directoryName) {
     var dir = path.join(__dirname, "./" + directoryName);
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
         fs.writeFileSync(path.join(dir, "./feature.ts"), "test");
+    }
+};
+var createFile = function (dir, name, extension, content) {
+    if (!fs.existsSync(dir)) {
+        fs.writeFileSync(path.join(dir, "./" + name + "." + extension), content);
     }
 };
 var parseConfig = function () {
@@ -18,6 +23,10 @@ var parseConfig = function () {
         .toString();
     var data = JSON.parse(rawdata);
 };
-createDirectory("./test");
+var getListOfFiles = function (dir) {
+    console.warn(fs.readdirSync(dir));
+};
+getListOfFiles(__dirname);
+// createDirectory("./test");
 // getCommandLineArguments();
 // parseConfig();
