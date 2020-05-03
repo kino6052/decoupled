@@ -37,7 +37,7 @@ const getListOfFiles = (dir: string) => {
   console.warn(fs.readdirSync(dir));
 };
 
-getListOfFiles(__dirname);
+export const test = () => getListOfFiles(path.join(__dirname));
 // createDirectory("./test");
 // getCommandLineArguments();
 // parseConfig();
