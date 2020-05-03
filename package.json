@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node node_modules/tsc/bin/tsc.js -p . && node ./src/index.js",
+    "test": "node ./node_modules/jest-cli/bin/jest.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,11 @@
   "homepage": "https://github.com/kino6052/decoupled#readme",
   "dependencies": {
     "@types/fs-extra": "^8.1.0",
+    "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "fs-extra": "^9.0.0",
+    "jest": "^25.5.4",
+    "jest-cli": "^25.5.4",
     "node": "^14.0.0",
     "prettier": "^2.0.5",
     "ts-node": "^8.9.1",
