@@ -33,11 +33,46 @@ const parseConfig = () => {
   let data = JSON.parse(rawdata);
 };
 
-const getListOfFiles = (dir: string) => {
-  console.warn(fs.readdirSync(dir));
+const readFile = (pathToFile: string) => fs.readFileSync(pathToFile).toString();
+
+const getListOfFiles = (dir: string) => fs.readdirSync(dir);
+
+const getListOfFeatures = (pathToFeatures: string) =>
+  getListOfFiles(pathToFeatures);
+
+const getInterface = (dir: string) => {
+  const content = readFile(path.join(dir, "./interface.ts"));
+  return content;
 };
 
-export const test = () => getListOfFiles(path.join(__dirname));
+export const parseInterface = (content: string) => {
+  // Match Interface: interface \w+ {\s+(\w+: [\(\):A-Za-z =>]+;\s+)+}\sg
+  // Match Method: (\w+): \(([:A-Za-z =>\(\){}]*)\) => void;\mg
+  const result = [];
+  const _interface = content.match(
+    /interface \w+ {\s+(\w+: [\(\):A-Za-z =>]+;\s+)+}/gs
+  );
+  const _methods = _interface[0].match(
+    /(\w+): \(([:A-Za-z =>\(\){}]*)\) => void;/gm
+  );
+  for (let method of _methods) {
+    const t = method.match(/(\w+): \(([:A-Za-z =>\(\){}]*)\) => void;/i);
+    result.push(t[1]);
+  }
+  return result;
+};
+
+export const test = () => {
+  const featurePath = path.join(__dirname, "features");
+  const features = getListOfFeatures(featurePath);
+  const result = [];
+  for (let feature of features) {
+    const test = getInterface(path.join(featurePath, feature));
+    const i = parseInterface(test);
+    result.push([feature, i]);
+  }
+  console.warn(result);
+};
 // createDirectory("./test");
 // getCommandLineArguments();
 // parseConfig();

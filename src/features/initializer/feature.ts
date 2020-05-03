@@ -1,15 +1,17 @@
 import { Subject } from "rxjs";
-import { Interface } from "./interface";
+import { Initializer } from "./interface";
+import { initialize } from "./implementation";
 
 const DoClickSubject = new Subject();
 const DoRenderSubject = new Subject();
+const OnInitializeSubject = new Subject();
 
-Interface.onClick = (cb: () => void) => {
-  DoClickSubject.subscribe(cb);
+Initializer.onInitialize = (cb: () => void) => {
+  OnInitializeSubject.subscribe(cb);
 };
 
-Interface.doRender = () => {
+Initializer.doRender = () => {
   DoRenderSubject.next();
 };
 
-DoClickSubject.next();
+initialize(() => OnInitializeSubject.next());

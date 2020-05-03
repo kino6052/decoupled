@@ -1,3 +1,6 @@
-import { Interface } from "./interface";
+import { Initializer } from "./interface";
 
-Interface.onClick(Interface.doRender);
+const connections = [
+  [Initializer, "onClick"],
+  [Initializer, "doRender"],
+];

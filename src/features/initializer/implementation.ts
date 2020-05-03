@@ -1,1 +1,1 @@
-export const test = () => console.warn("test");
+export const initialize = (cb: () => void) => cb();

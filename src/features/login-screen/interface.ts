@@ -1,9 +1,9 @@
 interface IInitializer {
-  onInitialize: (cb: () => void) => void;
+  onClick: (cb: () => void) => void;
   doRender: () => void;
 }
 
 export const Initializer: IInitializer = {
-  onInitialize: () => {},
+  onClick: () => {},
   doRender: () => {},
 };
