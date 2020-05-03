@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/kino6052/decoupled#readme",
   "dependencies": {
+    "@types/node": "^13.13.4",
+    "tsc": "^1.20150623.0",
     "typescript": "^3.8.3"
   }
 }
